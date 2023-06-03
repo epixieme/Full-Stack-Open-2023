@@ -1,9 +1,10 @@
 sequenceDiagram
     participant browser
     participant server
-
+Note right of browser:Browser client save button triggers post request
     browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
     activate server
+     Note left of server: Server receives the request and adds to db or object
     server-->>browser: Redirect 302
     deactivate server
     Note right of browser: The redirect triggers the Get request below.
