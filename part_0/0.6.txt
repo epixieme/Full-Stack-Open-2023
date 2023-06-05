@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant browser
+    participant server
+       Note right of browser: Base files are sent once only. 
+   Note right of browser: Browser client  triggers post request to server through save btn    
+   browser->>server: POST HTTP https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    
+    activate server
+     Note left of server: note created
+    server-->>browser: 201
+    Note right of browser:Only the data is sent back and rendered
+    deactivate server
