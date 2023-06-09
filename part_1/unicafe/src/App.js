@@ -4,39 +4,17 @@ const Headers = ({ text }) => <h1>{text}</h1>;
 
 const Button = ({ text, onClick }) => <button onClick={onClick}>{text}</button>;
 
-const Total = ({ clicks, text }) => (
-  <section>
-    <p>
-      {text} {clicks}
-    </p>
-  </section>
-);
-
-const GrandTotal = ({ results }) => {
+const StatisticLine = ({ results, text,}) => {
   return (
     <section>
-      <p>All: {results}</p>
+      <p>
+        {text} {results}
+      </p>
+      
     </section>
   );
 };
 
-const Average = ({ results }) => {
-  return (
-    <section>
-      <p>Average: {results}</p>
-    </section>
-  );
-};
-
-const Positive = ({ results }) => {
-  return (
-    <section>
-      <p>Positive: {results}</p>
-    </section>
-  );
-};
-
-// a proper place to define a component
 const Statistics = ({
   allClicks,
   good,
@@ -46,18 +24,17 @@ const Statistics = ({
   percentage,
   averageCalc,
 }) => {
-  if (Object.values(allClicks).every(ele => ele === 0)) {
+  if (Object.values(allClicks).every((ele) => ele === 0)) {
     return <div>No Feedback given</div>;
   }
   return (
     <div>
-      <Total clicks={good} text="good" />
-      <Total clicks={bad} text="bad" />
-      <Total clicks={neutral} text="neutral" />
-      <GrandTotal results={sumClick} />
-      <Average results={averageCalc} />
-      <Positive results={percentage} />
-      
+      <StatisticLine results={good} text="good" />
+      <StatisticLine results={bad} text="bad" />
+      <StatisticLine results={neutral} text="neutral" />
+      <StatisticLine results={sumClick} text="All:" />
+      <StatisticLine results={averageCalc} text="Average:" />
+      <StatisticLine results={percentage} text="Percentage:" />
     </div>
   );
 };
@@ -109,7 +86,7 @@ const App = () => {
       <Button text="Neutral" onClick={handleNeutralClick} />
       <Headers text="Statistics" />
       <Statistics
-      allClicks = {clicks}
+        allClicks={clicks}
         good={good}
         bad={bad}
         neutral={neutral}
@@ -117,7 +94,6 @@ const App = () => {
         percentage={percentage(good)}
         averageCalc={averageCalc()}
       />
-  
     </section>
   );
 };
