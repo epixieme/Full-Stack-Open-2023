@@ -1,10 +1,16 @@
-import { useState} from "react";
+import { useState } from "react";
 
 const Headers = ({ text }) => <h1>{text}</h1>;
 
 const Button = ({ text, onClick }) => <button onClick={onClick}>{text}</button>;
 
-const Total = ({ clicks, text }) => <section><p>{text} {clicks}</p></section>;
+const Total = ({ clicks, text }) => (
+  <section>
+    <p>
+      {text} {clicks}
+    </p>
+  </section>
+);
 
 const GrandTotal = ({ results }) => {
   return (
@@ -14,7 +20,6 @@ const GrandTotal = ({ results }) => {
   );
 };
 
-
 const Average = ({ results }) => {
   return (
     <section>
@@ -22,7 +27,6 @@ const Average = ({ results }) => {
     </section>
   );
 };
-
 
 const Positive = ({ results }) => {
   return (
@@ -32,8 +36,32 @@ const Positive = ({ results }) => {
   );
 };
 
-const App = () => {
+// a proper place to define a component
+const Statistics = ({
+  allClicks,
+  good,
+  bad,
+  neutral,
+  sumClick,
+  percentage,
+  averageCalc,
+}) => {
+  if (Object.values(allClicks).every(ele => ele === 0)) {
+    return <div>No Feedback given</div>;
+  }
+  return (
+    <div>
+      <Total clicks={good} text="good" />
+      <Total clicks={bad} text="bad" />
+      <Total clicks={neutral} text="neutral" />
+      <GrandTotal results={sumClick} />
+      <Average results={averageCalc} />
+      <Positive results={percentage} />
+    </div>
+  );
+};
 
+const App = () => {
   //used an object rather than arrays
   const [clicks, setClicks] = useState({
     good: 0,
@@ -41,7 +69,7 @@ const App = () => {
     bad: 0,
   });
 
-const {good, neutral, bad} = clicks
+  const { good, neutral, bad } = clicks;
 
   const handleGoodClick = () => {
     const newClicks = {
@@ -66,12 +94,12 @@ const {good, neutral, bad} = clicks
     setClicks(newClicks);
   };
 
-  const sumClicks = ()=>good + bad + neutral
+  const sumClicks = () => good + bad + neutral;
 
-  const percentage =(positive)=>(positive * 100) / sumClicks() || 0;
-   
-  const averageCalc =()=>(good - bad) / sumClicks() || 0
-  
+  const percentage = (positive) => (positive * 100) / sumClicks() || 0;
+
+  const averageCalc = () => (good - bad) / sumClicks() || 0;
+
   return (
     <section>
       <Headers text="Give Feedback" />
@@ -79,12 +107,16 @@ const {good, neutral, bad} = clicks
       <Button text="Bad" onClick={handleBadClick} />
       <Button text="Neutral" onClick={handleNeutralClick} />
       <Headers text="Statistics" />
-      <Total clicks={good} text="good" />
-      <Total clicks={bad} text="bad" />
-      <Total clicks={neutral} text="neutral" />
-      <GrandTotal results={sumClicks()} />
-      <Average results={averageCalc()} />
-      <Positive results={percentage(good)} />
+      <Statistics
+      allClicks = {clicks}
+        good={good}
+        bad={bad}
+        neutral={neutral}
+        sumClick={sumClicks()}
+        percentage={percentage(good)}
+        averageCalc={averageCalc()}
+      />
+  
     </section>
   );
 };
