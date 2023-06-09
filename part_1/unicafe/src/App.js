@@ -1,22 +1,15 @@
-import { useState } from "react";
+import { useState} from "react";
 
 const App = () => {
-  
-  const Headers = ({ text }) => <h1>{text}</h1>;
-
   const [clicks, setClicks] = useState({
     good: 0,
     neutral: 0,
     bad: 0,
   });
 
-  const Button = ({ text, onClick }) => {
-    return <button onClick={onClick}>{text}</button>;
-  };
+const {good, neutral, bad} = clicks
 
   const handleGoodClick = () => {
-    console.log("clicked");
-
     const newClicks = {
       ...clicks,
       good: clicks.good + 1,
@@ -25,8 +18,6 @@ const App = () => {
   };
 
   const handleBadClick = () => {
-    console.log("clicked");
-
     const newClicks = {
       ...clicks,
       bad: clicks.bad + 1,
@@ -34,8 +25,6 @@ const App = () => {
     setClicks(newClicks);
   };
   const handleNeutralClick = () => {
-    console.log("clicked");
-
     const newClicks = {
       ...clicks,
       neutral: clicks.neutral + 1,
@@ -43,24 +32,61 @@ const App = () => {
     setClicks(newClicks);
   };
 
-  const Total = ({ clicks, text }) => (
-    <section>
-      <p>
-        {text} {clicks}
-      </p>
-    </section>
-  );
+  const Headers = ({ text }) => <h1>{text}</h1>;
+
+  const Button = ({ text, onClick }) => <button onClick={onClick}>{text}</button>;
+
+  const Total = ({ clicks, text }) => <section><p>{text} {clicks}</p></section>;
+
+  const sumClicks = ()=>good + bad + neutral
+
+  const percentage =(positive)=>{
+    const percent = positive * 100 /sumClicks()|| 0;
+    return percent
+  }
+
+  const averageCalc =()=>(good - bad)/sumClicks() || 0
+  
+  
+  const GrandTotal = ({ results }) => {
+    return (
+      <section>
+        <p>All: {results}</p>
+      </section>
+    );
+  };
+
+
+  const Average = ({ results }) => {
+    return (
+      <section>
+        <p>Average: {results}</p>
+      </section>
+    );
+  };
+
+
+  const Positive = ({ results }) => {
+    return (
+      <section>
+        <p>Positive: {results}</p>
+      </section>
+    );
+  };
 
   return (
     <section>
-      <Headers text='Give Feedback'/>
+      <Headers text="Give Feedback" />
       <Button text="Good" onClick={handleGoodClick} />
       <Button text="Bad" onClick={handleBadClick} />
       <Button text="Neutral" onClick={handleNeutralClick} />
-      <Headers text='Statistics'/>
-      <Total clicks={clicks.good} text="good" />
-      <Total clicks={clicks.bad} text="bad" />
-      <Total clicks={clicks.neutral} text="neutral" />
+      <Headers text="Statistics" />
+      <Total clicks={good} text="good" />
+      <Total clicks={bad} text="bad" />
+      <Total clicks={neutral} text="neutral" />
+      <GrandTotal results={sumClicks()} />
+      <Average results={averageCalc()} />
+      <Positive results={percentage(good)} />
     </section>
   );
 };
