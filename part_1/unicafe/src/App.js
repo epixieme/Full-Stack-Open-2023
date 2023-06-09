@@ -57,6 +57,7 @@ const Statistics = ({
       <GrandTotal results={sumClick} />
       <Average results={averageCalc} />
       <Positive results={percentage} />
+      
     </div>
   );
 };
