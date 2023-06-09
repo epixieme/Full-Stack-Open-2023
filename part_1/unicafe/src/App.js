@@ -6,12 +6,15 @@ const Button = ({ text, onClick }) => <button onClick={onClick}>{text}</button>;
 
 const StatisticLine = ({ results, text,}) => {
   return (
-    <section>
-      <p>
-        {text} {results}
-      </p>
+    <table>
+      <td>
+        {text}
+      </td>
+      <td>
+      {results}
+      </td>
       
-    </section>
+    </table>
   );
 };
 
