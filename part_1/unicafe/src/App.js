@@ -4,23 +4,15 @@ const Headers = ({ text }) => <h1>{text}</h1>;
 
 const Button = ({ text, onClick }) => <button onClick={onClick}>{text}</button>;
 
-const StatisticLine = ({ results, text,}) => {
+const StatisticLine = ({ results, text }) => {
   return (
     <table>
-    <tbody>
-    <tr>
-      <td>
-        {text}
-      </td>
-      <td>
-      {results}
-      </td>
-      </tr>
-      
-      
-      
-   
-    </tbody>
+      <tbody>
+        <tr>
+          <td>{text}</td>
+          <td>{results}</td>
+        </tr>
+      </tbody>
     </table>
   );
 };
