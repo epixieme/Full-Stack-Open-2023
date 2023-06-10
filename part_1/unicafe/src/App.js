@@ -7,13 +7,20 @@ const Button = ({ text, onClick }) => <button onClick={onClick}>{text}</button>;
 const StatisticLine = ({ results, text,}) => {
   return (
     <table>
+    <tbody>
+    <tr>
       <td>
         {text}
       </td>
       <td>
       {results}
       </td>
+      </tr>
       
+      
+      
+   
+    </tbody>
     </table>
   );
 };
