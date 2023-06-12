@@ -38,8 +38,7 @@ const Part = ({ part, exercises }) => {
 };
 
 const Stats = ({ sum }) => {
-   const total = sum.map((item) => item.exercises)
-  .reduce((a, c) => a + c, 0);
+   const total = sum.reduce((a, c) => a + c.exercises, 0);
 
   return (
     <section>
