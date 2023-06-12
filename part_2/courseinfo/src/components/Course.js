@@ -3,6 +3,7 @@ const Course = ({ course }) => {
     <section>
       <Header text={course.name} key={course.id} />
       <Content parts={course.parts} />
+      <Stats sum={course.parts} />
     </section>
   );
 };
@@ -16,13 +17,12 @@ const Header = ({ text }) => {
 };
 
 const Content = ({ parts }) => {
-const sum = parts.map(item=>item.exercises).reduce((a,c)=>a+c,0)
   return (
     <section>
       {parts.map((item) => (
         <Part part={item.name} exercises={item.exercises} key={item.id} />
       ))}
-      <Stats sum={sum} />
+    
     </section>
   );
 };
@@ -37,16 +37,15 @@ const Part = ({ part, exercises }) => {
   );
 };
 
-const Stats = ({sum}) =>{
+const Stats = ({ sum }) => {
+   const total = sum.map((item) => item.exercises)
+  .reduce((a, c) => a + c, 0);
 
-    return (
-        <section>
-          <h4>
-            Total of {sum} exercises
-          </h4>
-        </section>
-      );
-
-}
+  return (
+    <section>
+      <h4>Total of {total} exercises</h4>
+    </section>
+  );
+};
 
 export default Course;
