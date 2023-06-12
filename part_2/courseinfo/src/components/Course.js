@@ -27,7 +27,7 @@ const Header = ({ text }) => (
 );
 
 const Course = ({ course }) => {
-  console.log(course);
+
   return (
     <section>
       <Header text={course.name} key={course.id} />
