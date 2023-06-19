@@ -1,89 +1,14 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
+      "name": "dasasd",
+      "number": "adasd",
       "id": 1
     },
     {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
+      "name": "asdasd",
+      "number": "asdasd",
       "id": 2
-    },
-    {
-      "name": "Dan Abramov",
-      "number": "12-43-234345",
-      "id": 3
-    },
-    {
-      "name": "Mary Poppendieck",
-      "number": "39-23-6423122",
-      "id": 4
-    },
-    {
-      "name": "test",
-      "number": "",
-      "id": 5
-    },
-    {
-      "name": "sdsd",
-      "number": "",
-      "id": 6
-    },
-    {
-      "name": "dsad",
-      "number": "213123",
-      "id": 7
-    },
-    {
-      "name": "Arto",
-      "number": "",
-      "id": 8
-    },
-    {
-      "name": "Hellas",
-      "number": "",
-      "id": 9
-    },
-    {
-      "name": "",
-      "number": "",
-      "id": 10
-    },
-    {
-      "name": "dsasd",
-      "number": "",
-      "id": 11
-    },
-    {
-      "name": "hellas",
-      "number": "",
-      "id": 12
-    },
-    {
-      "name": "dadada",
-      "number": "dadad",
-      "id": 13
-    },
-    {
-      "name": "helll",
-      "number": "",
-      "id": 14
-    },
-    {
-      "name": "hell",
-      "number": "",
-      "id": 15
-    },
-    {
-      "name": "adasd",
-      "number": "asdas",
-      "id": 16
-    },
-    {
-      "name": "test23423",
-      "number": "2131",
-      "id": 17
     }
   ]
 }
