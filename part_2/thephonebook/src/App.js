@@ -5,14 +5,16 @@ import SearchPerson from "./components/SearchPerson";
 import Header from "./components/Header";
 import FormDetails from "./components/FormDetails";
 import DisplayPeople from "./components/DisplayPeople";
+import personService from "./services/persons"
 
 const App = () => {
   const [persons, setPersons] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((response) => {
+   personService.getAll()
+   .then((initialResponse) => {
       console.log("fulfilled");
-      setPersons(response.data);
+      setPersons(initialResponse);
     });
   });
 
@@ -38,10 +40,10 @@ const App = () => {
     if (names.includes(newName.toLowerCase())) {
       alert(`${newName} is already added to the phonebook`);
     } else {
-    axios
-    .post('http://localhost:3001/persons', newPerson)
-    .then(response => {
-     setPersons(persons.concat(response.data));
+    personService.
+    create(newPerson)
+    .then(returnedPerson => {
+     setPersons(persons.concat(returnedPerson));
      setNewName("");
      setNewNumber("");
     })
