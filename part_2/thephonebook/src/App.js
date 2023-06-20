@@ -110,6 +110,7 @@ const App = () => {
         persons={persons}
         search={search}
         onClick={(persons) => handleDelete(persons)}
+        key={persons}
       />
     </div>
   );
