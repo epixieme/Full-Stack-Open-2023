@@ -5,12 +5,16 @@ import Header from "./components/Header";
 import FormDetails from "./components/FormDetails";
 import DisplayPeople from "./components/DisplayPeople";
 import personService from "./services/persons";
+import Notification from "./components/Notification";
+
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [search, setSearch] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(() => {
     personService.getAll().then((initialResponse) => {
@@ -40,7 +44,6 @@ const App = () => {
     }
   };
 
-
   const addPerson = (event) => {
     event.preventDefault();
 
@@ -49,41 +52,53 @@ const App = () => {
       number: newNumber,
     };
 
-    const matching = persons.filter((item) => item.name === newName);
+    const duplicateName = persons.filter((item) => item.name === newName);
 
-    console.log(matching)
-    if (matching.length > 0 && newNumber.length > 0) {
+    if (duplicateName.length > 0 && newNumber.length > 0) {
       window.confirm(
         `${newName} is already added to the phonebook. Do you want to update the number?`
       );
 
       if (window.confirm) {
-        const id = matching[0].id;
+        const id = duplicateName[0].id;
         const person = persons.find((p) => p.id === id);
         const changedPerson = {
           ...person,
           number: newNumber,
         };
 
-        personService.update(id, changedPerson).then((returnedPerson) => {
-          setPersons(
-            persons.map((person) =>
-              person.id !== id ? person : returnedPerson
-            )
-          );
-        });
+        personService
+          .update(id, changedPerson)
+          .then((returnedPerson) => {
+            setPersons(
+              persons.map((person) =>
+                person.id !== id ? person : returnedPerson
+              )
+            );
+          })
+          .catch((error) => {
+            setErrorMessage(
+              `Person '${duplicateName[0].name}' was already removed from server`
+            );
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 5000);
+            setPersons(persons.filter((p) => p.id !== id));
+          });
       }
-    }else if (matching.length > 0) {
+    } else if (duplicateName.length > 0) {
       alert(`${newName} is already added to the phonebook.`);
-    }
-    else if (matching.length === 0 && newName.length > 0) {
+    } else if (duplicateName.length === 0 && newName.length > 0) {
       personService.create(newPerson).then((returnedPerson) => {
+        setSuccessMessage(`Successfully added`)
+        setTimeout(() => {
+        setSuccessMessage(null);
+        }, 5000);
         setPersons(persons.concat(returnedPerson));
         setNewName("");
         setNewNumber("");
       });
     }
-    
   };
 
   const handlePersonChange = (event) => {
@@ -94,10 +109,14 @@ const App = () => {
     setNewNumber(event.target.value);
   };
 
+ 
+
   return (
     <div>
       <SearchPerson onChange={handlePersonFilter} />
       <Header text="Phone Book" />
+      <Notification successMessage={successMessage} />
+      <Notification  errorMessage={errorMessage}  />
       <FormDetails
         newName={newName}
         newNumber={newNumber}
@@ -112,6 +131,7 @@ const App = () => {
         onClick={(persons) => handleDelete(persons)}
         key={persons}
       />
+
     </div>
   );
 };
