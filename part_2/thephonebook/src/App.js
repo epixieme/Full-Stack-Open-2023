@@ -7,7 +7,6 @@ import DisplayPeople from "./components/DisplayPeople";
 import personService from "./services/persons";
 import Notification from "./components/Notification";
 
-
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
@@ -90,9 +89,9 @@ const App = () => {
       alert(`${newName} is already added to the phonebook.`);
     } else if (duplicateName.length === 0 && newName.length > 0) {
       personService.create(newPerson).then((returnedPerson) => {
-        setSuccessMessage(`Successfully added`)
+        setSuccessMessage(`Successfully added`);
         setTimeout(() => {
-        setSuccessMessage(null);
+          setSuccessMessage(null);
         }, 5000);
         setPersons(persons.concat(returnedPerson));
         setNewName("");
@@ -109,14 +108,28 @@ const App = () => {
     setNewNumber(event.target.value);
   };
 
- 
+  const handleMsgMotifications = () => {
+    if (errorMessage && successMessage) {
+      return (
+        <section>
+          <Notification successMessage={successMessage} />
+          <Notification errorMessage={errorMessage} />
+        </section>
+      );
+    } else if (errorMessage) {
+      return <Notification errorMessage={errorMessage} />;
+    } else {
+      return <Notification successMessage={successMessage} />;
+    }
+  };
 
   return (
     <div>
       <SearchPerson onChange={handlePersonFilter} />
       <Header text="Phone Book" />
-      <Notification successMessage={successMessage} />
-      <Notification  errorMessage={errorMessage}  />
+      {handleMsgMotifications()}
+      {/* <Notification successMessage={successMessage} />
+      <Notification  errorMessage={errorMessage}  /> */}
       <FormDetails
         newName={newName}
         newNumber={newNumber}
@@ -131,7 +144,6 @@ const App = () => {
         onClick={(persons) => handleDelete(persons)}
         key={persons}
       />
-
     </div>
   );
 };
