@@ -1,11 +1,9 @@
-const Search =({search, onChange})=>{
-    return (
-        <section>
-          Find Countries: <input value={search} onChange={onChange} />
-        </section>
-      );
-    };
+const Search = ({ search, onChange }) => {
+  return (
+    <section>
+      Find Countries: <input value={search} onChange={onChange} />
+    </section>
+  );
+};
 
-
-
-export default Search
+export default Search;

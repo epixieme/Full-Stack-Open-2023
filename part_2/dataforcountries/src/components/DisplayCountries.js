@@ -1,51 +1,69 @@
-const DisplayCountries = ({ countries, search, show,onClick }) => {
+import WeatherDetails from "./WeatherDetails";
+
+const DisplayCountries = ({ countries, search, onClick }) => {
   const countryNames = countries.filter((item) =>
     item.country.toLowerCase().includes(search.toLowerCase())
   );
-  // console.log(countryNames)
-
   const results = countryNames.map((item) => {
-    // console.log(item.id)
+    let today = new Date().toISOString().slice(0, 10);
+    const days = item.days.filter((item) => today === item.datetime)[0] || 0;
     const lang = item.languages;
     if (item.show) {
       return (
-        <section>
+        <section key={item.id}>
           <p>{item.country}</p>
-          <button onClick={()=>onClick(item.id)}>{item.show ? "show" : "close"}</button>
+          <button onClick={() => onClick(item.id)}>
+            {item.show ? "show" : "close"}
+          </button>
         </section>
       );
-    } 
-    else if(!item.show){
+    } else if (!item.show) {
       return (
-        <section>
-          <h1>{item.country}</h1>
+        <section className="country-details-container" key={item.id}>
+          <h2 className="main-header">{item.country}</h2>
           <p>Captial: {item.capital}</p>
           <p>Area: {item.area}</p>
-          <p>Languages:</p>
+          <h2 className="secondary-header">Languages:</h2>
           {item.languages
-            ? Object.values(lang).map((item) => <li>{item}</li>)
+            ? Object.values(lang).map((item,ind) => <li key={ind + 1}>{item}</li>)
             : null}
-          <h1>{item.flag}</h1>
-          <button onClick={()=>onClick(item.id)}>{item.show ? "show" : "close"}</button>
+          <p className="flag">{item.flag}</p>
+          <WeatherDetails
+            countryName={item.country}
+            temp={days.temp}
+            wind={days.windspeed}
+            key={item.id}
+          />
+          <button onClick={() => onClick(item.id)}>
+            {item.show ? "show" : "close"}
+          </button>
         </section>
-        
       );
+    } else {
+      return null;
     }
   });
 
-  const result = countryNames.map((item) => {
+  const singleResult = countryNames.map((item) => {
     const lang = item.languages;
-
+    let today = new Date().toISOString().slice(0, 10);
+    const days = item.days.filter((item, ind) => today === item.datetime)[0];
     return (
-      <section>
+      <section key={item.id}>
         <h1>{item.country}</h1>
         <p>Captial: {item.capital}</p>
         <p>Area: {item.area}</p>
         <p>Languages:</p>
         {item.languages
-          ? Object.values(lang).map((item) => <li>{item}</li>)
+          ? Object.values(lang).map((item, ind) => <li key={ind + 1}>{item}</li>)
           : null}
         <h1>{item.flag}</h1>
+        <WeatherDetails
+          countryName={item.country}
+          temp={days.temp}
+          wind={days.windspeed}
+          key={item.id}
+        />
       </section>
     );
   });
@@ -57,7 +75,7 @@ const DisplayCountries = ({ countries, search, show,onClick }) => {
       </section>
     );
   } else if (search && countryNames.length === 1) {
-    return <section> {result}</section>;
+    return <section> {singleResult}</section>;
   } else {
     return <section>{results}</section>;
   }
