@@ -8,7 +8,6 @@ function App() {
   const [countries, setCountries] = useState([]);
   const [search, setSearch] = useState("");
  
-
   useEffect(() => {
     const fetchData = async () => {
       try {
