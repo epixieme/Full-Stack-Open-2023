@@ -17,10 +17,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "json-server -p3001 --watch db.json",
-    "build:ui": "rm -rf build && cd ../thephonebook && npm run build && cp -r build ../phonebook_backend",
-    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
-
+    "server": "json-server -p3001 --watch db.json"
   },
   "eslintConfig": {
     "extends": [
@@ -43,5 +40,4 @@
   "devDependencies": {
     "json-server": "^0.17.3"
   }
-
 }
