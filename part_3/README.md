@@ -1,4 +1,8 @@
 # Full-Stack-Open-2023
 
+backend > https://github.com/epixieme/phonebook_backend
 
-Parts 3.9-3.10 can be found here > https://github.com/epixieme/phonebook_backend
+frontend > https://github.com/epixieme/phonebook-frontend
+
+live  > https://phonebook-backend-9m9q.onrender.com/
+
