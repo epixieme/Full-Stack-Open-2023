@@ -12,9 +12,15 @@ const favoriteBlog = (blogs) => {
   return blogs.find((item) => item.likes === mostLikes);
 };
 
-
+const mostBlogs = (blogs) => {
+  const mostBlogs = Math.max(...blogs.map((item) => item.blogs));
+  return blogs
+    .filter((item) => item.blogs === mostBlogs)
+    .map((elem) => ({ author: elem.author, blogs: elem.blogs }))[0];
+};
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
+  mostBlogs,
 };
